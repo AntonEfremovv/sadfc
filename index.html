@@ -3,13 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Această linie trimite vizitatorul instant pe pagina home.html -->
-    <meta http-equiv="refresh" content="0; url=home.html">
-    <title>BrainHub</title>
+    <title>BrainHub - Acasă</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #ffffff;
+        }
+
+        /* Containerul telefonului */
+        .phone-container {
+            width: 393px;
+            height: 852px;
+            background-color: #000000;
+            border-radius: 40px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 8px solid #1f1f1f;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 24px 40px 24px;
+        }
+
+        /* Notch modern */
+        .dynamic-island {
+            width: 110px;
+            height: 30px;
+            background-color: #000000;
+            border-radius: 20px;
+            position: absolute;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .brand-logo {
+            font-size: 44px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 40px;
+            letter-spacing: -1px;
+        }
+
+        /* Meniu */
+        .nav-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex-grow: 1;
+            position: relative;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+
+        .nav-item:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+            transform: translateX(4px);
+        }
+
+        .nav-item svg {
+            width: 22px;
+            height: 22px;
+            opacity: 0.9;
+        }
+
+        .relative-icon-group {
+            position: relative;
+            width: 22px;
+            height: 22px;
+        }
+
+        .relative-icon-group .icon-sub {
+            position: absolute;
+            top: 5px;
+            left: 10px;
+        }
+
+        /* ==================== STRUCTURI DE IFRAME PENTRU MENIURI ==================== */
+        #filterFrame {
+            position: absolute;
+            width: 185px;  
+            height: 330px; 
+            left: 50px;
+            top: 90px;
+            border: none;
+            z-index: 100;
+            background: transparent;
+            
+            /* Stare inițială ascunsă cu animație */
+            opacity: 0;
+            transform: scale(0.9) translateY(-10px);
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        #temeFrame {
+            position: absolute;
+            width: 152px;  
+            height: 200px; 
+            left: 220px;   
+            top: 130px;    
+            border: none;
+            z-index: 101;  
+            background: transparent;
+            
+            /* Stare inițială ascunsă cu animație */
+            opacity: 0;
+            transform: scale(0.9) translateX(-10px);
+            pointer-events: none;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Fundal întunecat invizibil pentru a închide meniurile la click în exterior */
+        .menu-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 90;
+            display: none;
+            background: transparent;
+        }
+
+        /* Buton Pagini */
+        .bottom-bar {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: auto;
+            z-index: 5;
+        }
+
+        .pages-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            background: #0091FF;
+            border-radius: 24px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 4px 20px rgba(0, 145, 255, 0.4);
+            border: 1px solid rgba(0, 145, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .pages-btn:hover {
+            transform: translateY(-2px);
+            background: #1a9cff;
+        }
+
+        .home-indicator {
+            width: 140px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 10px;
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+        }
+    </style>
 </head>
 <body>
-    <p style="font-family: sans-serif; color: #fff; background: #121212; text-align: center; margin-top: 20%; font-size: 18px;">
-        Se încarcă BrainHub... Dacă nu ești redirecționat, <a href="home.html" style="color: #0091FF;">apasă aici</a>.
-    </p>
+
+    <div class="phone-container">
+        <div class="dynamic-island"></div>
+        <div class="menu-overlay" id="menuOverlay"></div>
+
+        <div class="brand-logo">BrainHub</div>
+
+        <nav class="nav-menu">
+            
+            <!-- Favorite -->
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 14 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.2899 3.98395H9.70657M7 12.6936L12.6669 17.7558C12.9891 18.0436 13.5 17.8149 13.5 17.3829V2.5C13.5 1.39543 12.6046 0.5 11.5 0.5H2.5C1.39543 0.5 0.5 1.39543 0.5 2.5V17.3829C0.5 17.8149 1.01092 18.0436 1.3331 17.7558L7 12.6936Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Favorite</span>
+            </a>
+
+            <!-- Filtru -->
+            <a href="#" class="nav-item" id="btnFiltru">
+                <svg viewBox="0 0 17 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M2.96154 5.5H14.0385M0.5 0.5H16.5M6.65385 10.5H10.3462" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Filtru</span>
+            </a>
+
+            <!-- Fereastra Iframe în care se încarcă filtru.html -->
+            <iframe id="filterFrame" src="filtru.html"></iframe>
+
+            <!-- Fereastra Iframe în care se încarcă teme.html -->
+            <iframe id="temeFrame" src="teme.html"></iframe>
+
+            <!-- Statistica -->
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.1001 0.5C15.402 0.500032 19.7 4.79812 19.7 10.1C19.7 15.402 15.4019 19.7001 10.1 19.7001C4.79807 19.7001 0.5 15.402 0.5 10.1C0.5 4.79807 4.7981 0.499968 10.1001 0.5ZM3.5 16.7001L10.1 10.1001L10.1001 0.5M10.1 10.1001L3.5 3.50006" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Statistica</span>
+            </a>
+
+            <!-- Căutare pagini -->
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 19 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8.9 19.6999H2.89999C1.5745 19.6999 0.499991 18.6254 0.5 17.2999L0.500093 2.89999C0.500101 1.57451 1.57462 0.5 2.90009 0.5H13.7004C15.0258 0.5 16.1004 1.57452 16.1004 2.9V7.7M17.3 17.9L18.5 19.1M4.70037 5.3H11.9004M4.70037 8.9H11.9004M4.70037 12.5H8.30038M17.9 15.5C17.9 17.1569 16.5569 18.5 14.9 18.5C13.2431 18.5 11.9 17.1569 11.9 15.5C11.9 13.8431 13.2431 12.5 14.9 12.5C16.5569 12.5 17.9 13.8431 17.9 15.5Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Căutare pagini</span>
+            </a>
+
+            <!-- Mai târziu -->
+            <a href="#" class="nav-item">
+                <div class="relative-icon-group">
+                    <svg viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 21px; height: 17px;">
+                        <path d="M10.6996 16.3822H2.90054C1.57504 16.3822 0.500522 15.3077 0.500535 13.9822L0.500625 4.8579C0.500631 3.94397 0.500291 2.64224 0.5 1.69969C0.499795 1.03678 1.03713 0.5 1.70005 0.5H7.41826L10.1833 3.45364H18.4996C19.1623 3.45364 19.6996 3.99089 19.6996 4.65364V7.84121" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <svg class="icon-sub" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 11px; height: 11px;">
+                        <path d="M5.84189 5.97434C6.10386 6.06167 6.38702 5.92009 6.47434 5.65811C6.56167 5.39614 6.42009 5.11298 6.15811 5.02566L6 5.5L5.84189 5.97434ZM4.5 5H4C4 5.21522 4.13772 5.40628 4.34189 5.47434L4.5 5ZM5 2.90928C5 2.63313 4.77614 2.40928 4.5 2.40928C4.22386 2.40928 4 2.63313 4 2.90928H4.5H5ZM6 5.5L6.15811 5.02566L4.65811 4.52566L4.5 5L4.34189 5.47434L5.84189 5.97434L6 5.5ZM4.5 5H5V2.90928H4.5H4V5H4.5ZM8.5 4.5H8C8 6.433 6.433 8 4.5 8V8.5V9C6.98528 9 9 6.98528 9 4.5H8.5ZM4.5 8.5V8C2.567 8 1 6.433 1 4.5H0.5H0C0 6.98528 2.01472 9 4.5 9V8.5ZM0.5 4.5H1C1 2.567 2.567 1 4.5 1V0.5V0C2.46243 0 0 2.46243 0 4.5H0.5ZM4.5 0.5V1C6.433 1 8 2.567 8 4.5H8.5H9C9 2.01472 6.98528 0 4.5 0V0.5Z" fill="white"/>
+                    </svg>
+                </div>
+                <span>Mai târziu</span>
+            </a>
+
+            <!-- Istoric -->
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.4399 4.75H0.56006M11.5 8.5C9.42534 8.5 6.5 8.5 6.5 8.5M17.5 5.25164V15.375C17.5 16.5486 16.5486 17.5 15.375 17.5H2.625C1.4514 17.5 0.5 16.5486 0.5 15.375V5.25164C0.5 4.92175 0.576808 4.59638 0.724342 4.30132L2.1845 1.381C2.45447 0.841066 3.00632 0.5 3.60999 0.5H14.39C14.9937 0.5 15.5455 0.841066 15.8155 1.381L17.2757 4.30132C17.4232 4.59638 17.5 4.92175 17.5 5.25164Z" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Istoric</span>
+            </a>
+
+            <!-- Setări -->
+            <a href="#" class="nav-item">
+                <svg viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M11.1763 1.81627C10.7488 0.0612432 8.25121 0.0612432 7.8237 1.81627C7.75987 2.07999 7.63468 2.32492 7.45831 2.53112C7.28194 2.73732 7.05938 2.89897 6.80874 3.00291C6.5581 3.10684 6.28646 3.15014 6.01592 3.12927C5.74538 3.10839 5.4836 3.02394 5.25187 2.88279C3.70832 1.94227 1.94201 3.70855 2.88254 5.25207C3.49006 6.24884 2.95117 7.54936 1.81713 7.82499C0.060955 8.25137 0.060955 10.75 1.81713 11.1753C2.08093 11.2392 2.3259 11.3645 2.53211 11.541C2.73831 11.7175 2.89991 11.9402 3.00375 12.191C3.1076 12.4418 3.15074 12.7135 3.12968 12.9841C3.10862 13.2547 3.02394 13.5165 2.88254 13.7482C1.94201 15.2917 3.70832 17.058 5.25187 16.1175C5.48356 15.9761 5.74536 15.8914 6.01597 15.8704C6.28658 15.8493 6.55834 15.8924 6.80912 15.9963C7.0599 16.1001 7.2826 16.2617 7.45911 16.4679C7.63561 16.6741 7.76091 16.9191 7.82482 17.1829C8.25121 18.939 10.7499 18.939 11.1752 17.1829C11.2393 16.9192 11.3647 16.6744 11.5413 16.4684C11.7178 16.2623 11.9405 16.1008 12.1912 15.997C12.4419 15.8932 12.7135 15.85 12.9841 15.8709C13.2546 15.8919 13.5164 15.9764 13.7481 16.1175C15.2917 17.058 17.058 15.2917 16.1175 13.7482C15.9763 13.5165 15.8918 13.2547 15.8709 12.9842C15.85 12.7136 15.8932 12.442 15.997 12.1913C16.1008 11.9406 16.2623 11.7179 16.4683 11.5414C16.6744 11.3648 16.9192 11.2394 17.1829 11.1753C18.939 10.7489 18.939 8.25025 17.1829 7.82499C16.9191 7.76108 16.6741 7.63578 16.4679 7.45928C16.2617 7.28278 16.1001 7.06007 15.9962 6.8093C15.8924 6.55853 15.8493 6.28677 15.8703 6.01617C15.8914 5.74556 15.9761 5.48376 16.1175 5.25207C17.058 3.70855 15.2917 1.94227 13.7481 2.88279C13.5164 3.02418 13.2546 3.10886 12.984 3.12992C12.7134 3.15098 12.4417 3.10784 12.1909 3.004C11.9401 2.90016 11.7174 2.73856 11.5409 2.53236C11.3644 2.32616 11.2391 2.08119 11.1752 1.8174L11.1763 1.81627Z" stroke="white"/>
+                    <path d="M11.5 9.5C11.5 10.6046 10.6046 11.5 9.5 11.5C8.39543 11.5 7.5 10.6046 7.5 9.5C7.5 8.39543 8.39543 7.5 9.5 7.5C10.6046 7.5 11.5 8.39543 11.5 9.5Z" stroke="white"/>
+                </svg>
+                <span>Setări</span>
+            </a>
+
+        </nav>
+
+        <!-- Buton Pagini legat acum direct de Pagini.html -->
+        <div class="bottom-bar">
+            <a href="Pagini.html" class="pages-btn">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 19C14.9706 19 19 14.9706 19 10C19 5.02944 14.9706 1 10 1M10 19C5.02944 19 1 14.9706 1 10C1 5.02944 5.02944 1 10 1M10 19C7.82538 19 6.0625 14.9706 6.0625 10C6.0625 5.02944 7.82538 1 10 1M10 19C12.1746 19 13.9375 14.9706 13.9375 10C13.9375 5.02944 12.1746 1 10 1M2.6875 14.3744C4.33632 13.4302 7.07573 12.8125 10.1764 12.8125C13.4124 12.8125 16.255 13.4854 17.875 14.5M2.6875 5.62558C4.33632 6.56975 7.07573 7.1875 10.1764 7.1875C13.4124 7.1875 16.255 6.5146 17.875 5.5" stroke="white" stroke-width="2"/>
+                </svg>
+                <span>Pagini</span>
+            </a>
+        </div>
+
+        <div class="home-indicator"></div>
+    </div>
+
+    <!-- Script de control pentru Iframe-uri (Filtru și Teme) -->
+    <script>
+        const btnFiltru = document.getElementById('btnFiltru');
+        const filterFrame = document.getElementById('filterFrame');
+        const temeFrame = document.getElementById('temeFrame');
+        const menuOverlay = document.getElementById('menuOverlay');
+
+        // Deschide/închide Filtre
+        btnFiltru.addEventListener('click', function(e) {
+            e.preventDefault();
+            const isActive = filterFrame.style.opacity === "1";
+            if (isActive) {
+                closePopup();
+            } else {
+                openPopup();
+            }
+        });
+
+        // Ascultăm semnalele venite prin postMessage din filtru.html pentru a acționa submeniul Teme
+        window.addEventListener('message', function(event) {
+            if (event.data === 'toggleTeme') {
+                const isTemeActive = temeFrame.style.opacity === "1";
+                if (isTemeActive) {
+                    closeTeme();
+                } else {
+                    openTeme();
+                }
+            }
+        });
+
+        // Închidem meniurile dacă utilizatorul apasă pe spațiul liber din jur
+        menuOverlay.addEventListener('click', closePopup);
+
+        function openPopup() {
+            filterFrame.style.opacity = "1";
+            filterFrame.style.transform = "scale(1) translateY(0)";
+            filterFrame.style.pointerEvents = "auto";
+            menuOverlay.style.display = 'block';
+        }
+
+        function closePopup() {
+            // Închide filtrele
+            filterFrame.style.opacity = "0";
+            filterFrame.style.transform = "scale(0.9) translateY(-10px)";
+            filterFrame.style.pointerEvents = "none";
+            
+            // Închide automat și submeniul de teme dacă e deschis
+            closeTeme();
+            
+            menuOverlay.style.display = 'none';
+        }
+
+        function openTeme() {
+            temeFrame.style.opacity = "1";
+            temeFrame.style.transform = "scale(1) translateX(0)";
+            temeFrame.style.pointerEvents = "auto";
+        }
+
+        function closeTeme() {
+            temeFrame.style.opacity = "0";
+            temeFrame.style.transform = "scale(0.9) translateX(-10px)";
+            temeFrame.style.pointerEvents = "none";
+        }
+    </script>
 </body>
 </html>
